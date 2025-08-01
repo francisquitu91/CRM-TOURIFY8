@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [collapsed, setCollapsed] = React.useState(false);
   const handleHerramientasClick = () => {
-    window.open('https://musical-rolypoly-8e704b.netlify.app/', '_blank');
+    window.open('https://superlative-empanada-c1a974.netlify.app/', '_blank');
   };
 
   // Si está retraído, no renderizar el sidebar (en desktop)
