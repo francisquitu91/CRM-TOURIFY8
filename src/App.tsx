@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { User } from './types';
 import { getCurrentUser } from './utils/auth';
 import { LoginForm } from './components/auth/LoginForm';
@@ -12,6 +13,7 @@ import { TasksSection } from './components/tasks/TasksSection';
 import { MotivationSection } from './components/motivation/MotivationSection';
 import { ToursSection } from './components/tours/ToursSection';
 import { CalendarSection } from './components/calendar/CalendarSection';
+import { PublicToursPage } from './components/public/PublicToursPage';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -59,11 +61,16 @@ function App() {
     }
   };
 
-  if (!user) {
-    return <LoginForm onLogin={handleLogin} />;
-  }
+  // Public tours page component
+  const PublicToursRoute = () => <PublicToursPage />;
 
-  return (
+  // Main app component
+  const MainApp = () => {
+    if (!user) {
+      return <LoginForm onLogin={handleLogin} />;
+    }
+
+    return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       <Sidebar
         activeSection={activeSection}
@@ -86,6 +93,16 @@ function App() {
         </main>
       </div>
     </div>
+    );
+  };
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/360" element={<PublicToursRoute />} />
+        <Route path="/*" element={<MainApp />} />
+      </Routes>
+    </Router>
   );
 }
 
