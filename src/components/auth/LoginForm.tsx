@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogIn } from 'lucide-react';
+import { LogIn, Eye, EyeOff } from 'lucide-react';
 import { authenticateUser, setCurrentUser } from '../../utils/auth';
 import { User } from '../../types';
 
@@ -8,8 +8,6 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  // NOTA: Estas variables (username, password, etc.) no se están usando ahora mismo.
-  // Deberías implementar el formulario de login normal para usarlas.
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +19,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setIsLoading(true);
     setError('');
 
+    // Simulate loading delay for better UX
     await new Promise(resolve => setTimeout(resolve, 500));
 
     const user = authenticateUser(username, password);
@@ -35,9 +34,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setIsLoading(false);
   };
 
-  // La función quickLogin ya no se llama desde ningún sitio, pero se puede dejar por si la necesitas en el futuro.
   const quickLogin = async (user: string) => {
-    // ... esta función queda intacta pero sin uso
+    setIsLoading(true);
+    setError('');
+    
+    // Simulate loading delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const authenticatedUser = authenticateUser(user, '123');
+    
+    if (authenticatedUser) {
+      setCurrentUser(authenticatedUser);
+      onLogin(authenticatedUser);
+    } else {
+      setError('Usuario o contraseña incorrectos');
+    }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -59,11 +72,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           )}
 
           <div className="space-y-4">
-            {/* 
-              Aquí es donde deberías poner tu formulario de login normal
-              con los campos de usuario y contraseña.
-              Por ejemplo: <form onSubmit={handleSubmit}> ... </form>
-            */}
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { user: 'gabo', name: 'Gabo', role: 'Sales' },
+                { user: 'pancho', name: 'Pancho', role: 'Dev' },
+                { user: 'agus', name: 'Agus', role: 'CEO' }
+              ].map((account) => (
+                <button
+                  key={account.user}
+                  onClick={() => quickLogin(account.user)}
+                  disabled={isLoading}
+                  className="p-4 text-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-800 hover:border-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <div className="text-lg font-medium text-gray-900 dark:text-white">{account.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-300">{account.role}</div>
+                </button>
+              ))}
+            </div>
             
             {isLoading && (
               <div className="text-center">
@@ -75,3 +100,4 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       </div>
     </div>
   );
+};
