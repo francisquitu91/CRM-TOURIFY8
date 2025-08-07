@@ -127,7 +127,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               )}
             </button>
           </form>
-        
+          
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">Acceso rápido para pruebas:</p>
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-2">
