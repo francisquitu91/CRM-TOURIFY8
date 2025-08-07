@@ -8,27 +8,36 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  // Los estados para username, password, etc., no se usan si solo está el quick login,
-  // pero los dejamos por si quieres agregar el formulario completo más tarde.
+  // NOTA: Estas variables (username, password, etc.) no se están usando ahora mismo.
+  // Deberías implementar el formulario de login normal para usarlas.
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const quickLogin = async (user: string) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
     setError('');
-    
+
     await new Promise(resolve => setTimeout(resolve, 500));
+
+    const user = authenticateUser(username, password);
     
-    const authenticatedUser = authenticateUser(user, '123');
-    
-    if (authenticatedUser) {
-      setCurrentUser(authenticatedUser);
-      onLogin(authenticatedUser);
+    if (user) {
+      setCurrentUser(user);
+      onLogin(user);
     } else {
-      setError('Error en el inicio de sesión rápido');
+      setError('Usuario o contraseña incorrectos');
     }
     
     setIsLoading(false);
+  };
+
+  // La función quickLogin ya no se llama desde ningún sitio, pero se puede dejar por si la necesitas en el futuro.
+  const quickLogin = async (user: string) => {
+    // ... esta función queda intacta pero sin uso
   };
 
   return (
@@ -50,32 +59,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           )}
 
           <div className="space-y-4">
-
-            {/* --- SECCIÓN DE ACCESO RÁPIDO OCULTA --- 
-                El siguiente bloque de código está comentado y no será visible en la aplicación.
-                Para volver a mostrarlo, elimina la línea `{/*` de arriba y la línea `*/}` de abajo.
+            {/* 
+              Aquí es donde deberías poner tu formulario de login normal
+              con los campos de usuario y contraseña.
+              Por ejemplo: <form onSubmit={handleSubmit}> ... </form>
             */}
-            {/*
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { user: 'gabo', name: 'Gabo', role: 'Sales' },
-                { user: 'pancho', name: 'Pancho', role: 'Dev' },
-                { user: 'agus', name: 'Agus', role: 'CEO' }
-              ].map((account) => (
-                <button
-                  key={account.user}
-                  onClick={() => quickLogin(account.user)}
-                  disabled={isLoading}
-                  className="p-4 text-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-800 hover:border-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <div className="text-lg font-medium text-gray-900 dark:text-white">{account.name}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-300">{account.role}</div>
-                </button>
-              ))}
-            </div>
-            */}
-
-            {/* Aquí deberías poner tu formulario de login con usuario y contraseña si lo necesitas */}
             
             {isLoading && (
               <div className="text-center">
