@@ -5,33 +5,33 @@ const USERS: User[] = [
   {
     id: '1',
     name: 'Gabriel',
-    email: 'gabo@tourify.cl',
+    username: 'gabo',
     role: 'Sales Manager'
   },
   {
     id: '2',
     name: 'Francisco',
-    email: 'pancho@tourify.cl',
+    username: 'pancho',
     role: 'Developer'
   },
   {
     id: '3',
     name: 'Agustín',
-    email: 'agus@tourify.cl',
+    username: 'agus',
     role: 'CEO'
   }
 ];
 
 // Simple password mapping (in production, use proper hashing)
 const PASSWORDS: Record<string, string> = {
-  'pancho@tourify.cl': 'pancho123',
-  'gabo@tourify.cl': 'gabo123',
-  'agus@tourify.cl': 'agus123'
+  'gabo': '123',
+  'pancho': '123',
+  'agus': '123'
 };
 
-export const authenticateUser = (email: string, password: string): User | null => {
-  if (PASSWORDS[email] === password) {
-    return USERS.find(user => user.email === email) || null;
+export const authenticateUser = (username: string, password: string): User | null => {
+  if (PASSWORDS[username] === password) {
+    return USERS.find(user => user.username === username) || null;
   }
   return null;
 };

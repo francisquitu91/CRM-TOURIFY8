@@ -8,7 +8,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -22,32 +22,32 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     // Simulate loading delay for better UX
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    const user = authenticateUser(email, password);
+    const user = authenticateUser(username, password);
     
     if (user) {
       setCurrentUser(user);
       onLogin(user);
     } else {
-      setError('Email o contraseña incorrectos');
+      setError('Usuario o contraseña incorrectos');
     }
     
     setIsLoading(false);
   };
 
-  const quickLogin = async (userEmail: string, userPassword: string) => {
+  const quickLogin = async (user: string) => {
     setIsLoading(true);
     setError('');
     
     // Simulate loading delay for better UX
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    const authenticatedUser = authenticateUser(userEmail, userPassword);
+    const authenticatedUser = authenticateUser(user, '123');
     
     if (authenticatedUser) {
       setCurrentUser(authenticatedUser);
       onLogin(authenticatedUser);
     } else {
-      setError('Email o contraseña incorrectos');
+      setError('Usuario o contraseña incorrectos');
     }
     
     setIsLoading(false);
@@ -71,74 +71,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
-                placeholder="ejemplo@tourify.cl"
-                required
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Contraseña
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white pr-12"
-                  placeholder="Ingresa tu contraseña"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
-            </div>
-            
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Iniciando sesión...</span>
-                </>
-              ) : (
-                <>
-                  <LogIn className="w-4 h-4" />
-                  <span>Iniciar Sesión</span>
-                </>
-              )}
-            </button>
-          </form>
-          
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">Acceso rápido para pruebas:</p>
+          <div className="space-y-4">
             <div className="grid grid-cols-3 gap-2">
               {[
-                { email: 'gabo@tourify.cl', password: 'gabo123', name: 'Gabo', role: 'Sales' },
-                { email: 'pancho@tourify.cl', password: 'pancho123', name: 'Pancho', role: 'Dev' },
-                { email: 'agus@tourify.cl', password: 'agus123', name: 'Agus', role: 'CEO' }
+                { user: 'gabo', name: 'Gabo', role: 'Sales' },
+                { user: 'pancho', name: 'Pancho', role: 'Dev' },
+                { user: 'agus', name: 'Agus', role: 'CEO' }
               ].map((account) => (
                 <button
-                  key={account.email}
-                  onClick={() => quickLogin(account.email, account.password)}
+                  key={account.user}
+                  onClick={() => quickLogin(account.user)}
                   disabled={isLoading}
                   className="p-4 text-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-800 hover:border-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -147,7 +89,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 </button>
               ))}
             </div>
-          </div>
+            
+            {isLoading && (
+              <div className="text-center">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Iniciando sesión...</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
