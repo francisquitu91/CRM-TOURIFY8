@@ -34,6 +34,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setIsLoading(false);
   };
 
+  // Esta función ya no se usará, pero la dejamos por si la necesitas en el futuro.
   const quickLogin = async (user: string) => {
     setIsLoading(true);
     setError('');
@@ -71,7 +72,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             </div>
           )}
 
+          {/* El formulario de login normal iría aquí. Como no está en tu código, he dejado este espacio. */}
+          {/* Si quieres agregar el formulario, puedes hacerlo aquí. */}
+
           <div className="space-y-4">
+            
+            {/*
+              INICIO DEL BLOQUE COMENTADO:
+              Hemos comentado toda la sección de "Acceso Rápido" para que no sea visible.
+              Si quieres volver a mostrarla, simplemente borra la línea "{/*" de arriba y la línea "*/}" de abajo.
+            */}
+            {/*
+            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+              Acceso rápido para pruebas:
+            </div>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { user: 'gabo', name: 'Gabo', role: 'Sales' },
@@ -89,6 +103,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 </button>
               ))}
             </div>
+            */}
+            {/* FIN DEL BLOQUE COMENTADO */}
             
             {isLoading && (
               <div className="text-center">
