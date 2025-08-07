@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogIn, Eye, EyeOff } from 'lucide-react';
+import { LogIn } from 'lucide-react';
 import { authenticateUser, setCurrentUser } from '../../utils/auth';
 import { User } from '../../types';
 
@@ -8,38 +8,15 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  // Los estados para username, password, etc., no se usan si solo está el quick login,
+  // pero los dejamos por si quieres agregar el formulario completo más tarde.
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    // Simulate loading delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const user = authenticateUser(username, password);
-    
-    if (user) {
-      setCurrentUser(user);
-      onLogin(user);
-    } else {
-      setError('Usuario o contraseña incorrectos');
-    }
-    
-    setIsLoading(false);
-  };
-
-  // Esta función ya no se usará, pero la dejamos por si la necesitas en el futuro.
   const quickLogin = async (user: string) => {
     setIsLoading(true);
     setError('');
     
-    // Simulate loading delay for better UX
     await new Promise(resolve => setTimeout(resolve, 500));
     
     const authenticatedUser = authenticateUser(user, '123');
@@ -48,7 +25,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       setCurrentUser(authenticatedUser);
       onLogin(authenticatedUser);
     } else {
-      setError('Usuario o contraseña incorrectos');
+      setError('Error en el inicio de sesión rápido');
     }
     
     setIsLoading(false);
@@ -72,20 +49,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             </div>
           )}
 
-          {/* El formulario de login normal iría aquí. Como no está en tu código, he dejado este espacio. */}
-          {/* Si quieres agregar el formulario, puedes hacerlo aquí. */}
-
           <div className="space-y-4">
-            
-            {/*
-              INICIO DEL BLOQUE COMENTADO:
-              Hemos comentado toda la sección de "Acceso Rápido" para que no sea visible.
-              Si quieres volver a mostrarla, simplemente borra la línea "{/*" de arriba y la línea "*/}" de abajo.
+
+            {/* --- SECCIÓN DE ACCESO RÁPIDO OCULTA --- 
+                El siguiente bloque de código está comentado y no será visible en la aplicación.
+                Para volver a mostrarlo, elimina la línea `{/*` de arriba y la línea `*/}` de abajo.
             */}
             {/*
-            <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Acceso rápido para pruebas:
-            </div>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { user: 'gabo', name: 'Gabo', role: 'Sales' },
@@ -104,7 +74,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               ))}
             </div>
             */}
-            {/* FIN DEL BLOQUE COMENTADO */}
+
+            {/* Aquí deberías poner tu formulario de login con usuario y contraseña si lo necesitas */}
             
             {isLoading && (
               <div className="text-center">
