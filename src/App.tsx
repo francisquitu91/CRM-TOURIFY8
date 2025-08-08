@@ -64,7 +64,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-gray-900 flex">
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
@@ -80,7 +80,7 @@ function App() {
         />
         
         <main className="flex-1 overflow-auto">
-          <div className="max-w-7xl mx-auto p-6">
+          <div className="max-w-7xl mx-auto p-4 sm:p-6">
             {renderActiveSection()}
           </div>
         </main>
