@@ -16,10 +16,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onQuickAction }) => 
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             ¡Bienvenido, {user.name}! 👋
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-300">
             Aquí tienes un resumen de todo lo importante para hoy
           </p>
         </div>

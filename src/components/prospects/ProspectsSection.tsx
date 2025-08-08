@@ -201,8 +201,8 @@ export const ProspectsSection: React.FC<ProspectsSectionProps> = ({ user }) => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Gestión de Prospectos</h1>
-          <p className="text-gray-600">Administra tus clientes potenciales y oportunidades de venta</p>
+          <h1 className="text-2xl font-bold text-white">Gestión de Prospectos</h1>
+          <p className="text-gray-300">Administra tus clientes potenciales y oportunidades de venta</p>
         </div>
         <button
           onClick={() => setShowForm(true)}
