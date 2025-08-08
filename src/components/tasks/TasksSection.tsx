@@ -244,8 +244,8 @@ export const TasksSection: React.FC<TasksSectionProps> = ({ user }) => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Gestión de Tareas y Metas</h1>
-          <p className="text-gray-600">Organiza el trabajo del equipo y define objetivos</p>
+          <h1 className="text-2xl font-bold text-white">Gestión de Tareas y Metas</h1>
+          <p className="text-gray-300">Organiza el trabajo del equipo y define objetivos</p>
         </div>
         <div className="flex items-center space-x-3">
           <button

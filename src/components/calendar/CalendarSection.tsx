@@ -148,7 +148,7 @@ export const CalendarSection: React.FC = () => {
 
   return (
     <div className="h-[80vh] relative"> {/* Contenedor principal con altura definida */}
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Calendario Interactivo</h2>
+      <h2 className="text-2xl font-bold text-white mb-4">Calendario Interactivo</h2>
       
       <Calendar
         localizer={localizer}

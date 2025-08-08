@@ -183,8 +183,8 @@ export const MotivationSection: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Motivacional 🚀</h1>
-        <p className="text-gray-600">Mantén al equipo enfocado y con energía hacia el objetivo</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Panel Motivacional 🚀</h1>
+        <p className="text-gray-300">Mantén al equipo enfocado y con energía hacia el objetivo</p>
       </div>
 
       {/* Countdown Timer */}

@@ -82,8 +82,8 @@ export const ToursSection: React.FC = () => {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Tours Virtuales</h1>
-          <p className="text-gray-600">Gestiona la biblioteca de tours virtuales</p>
+          <h1 className="text-2xl font-bold text-white">Tours Virtuales</h1>
+          <p className="text-gray-300">Gestiona la biblioteca de tours virtuales</p>
         </div>
       </div>
 
