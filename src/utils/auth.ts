@@ -24,9 +24,9 @@ const USERS: User[] = [
 
 // Simple password mapping (in production, use proper hashing)
 const PASSWORDS: Record<string, string> = {
-  'gabo': '123',
-  'pancho': '123',
-  'agus': '123'
+  'gabo': 'gabo123',
+  'pancho': 'pancho123',
+  'agus': 'agus123'
 };
 
 export const authenticateUser = (username: string, password: string): User | null => {

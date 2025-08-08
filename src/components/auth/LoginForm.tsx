@@ -35,22 +35,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   };
 
   const quickLogin = async (user: string) => {
-    setIsLoading(true);
+    setUsername(user);
+    setPassword('');
     setError('');
-    
-    // Simulate loading delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    const authenticatedUser = authenticateUser(user, '123');
-    
-    if (authenticatedUser) {
-      setCurrentUser(authenticatedUser);
-      onLogin(authenticatedUser);
-    } else {
-      setError('Usuario o contraseña incorrectos');
-    }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -80,9 +67,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               ].map((account) => (
                 <button
                   key={account.user}
-                  onClick={() => quickLogin(account.user)}
+                  onClick={() => {
+                    setUsername(account.user);
+                    setPassword('');
+                    setError('');
+                  }}
                   disabled={isLoading}
-                  className="p-4 text-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-indigo-50 dark:hover:bg-gray-800 hover:border-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`p-4 text-center border rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                    username === account.user
+                      ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900 dark:border-indigo-400'
+                      : 'border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-800 hover:border-indigo-300'
+                  }`}
                 >
                   <div className="text-lg font-medium text-gray-900 dark:text-white">{account.name}</div>
                   <div className="text-sm text-gray-500 dark:text-gray-300">{account.role}</div>
@@ -90,9 +85,66 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               ))}
             </div>
             
-            {isLoading && (
+            {username && (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Usuario seleccionado: <span className="font-bold">{username}</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
+                      placeholder={`Ingresa la clave para ${username}`}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+                
+                <button
+                  type="submit"
+                  disabled={isLoading || !password}
+                  className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <span>Iniciando sesión...</span>
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="w-4 h-4" />
+                      <span>Iniciar Sesión</span>
+                    </>
+                  )}
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUsername('');
+                    setPassword('');
+                    setError('');
+                  }}
+                  className="w-full text-gray-600 dark:text-gray-400 py-2 text-sm hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                >
+                  Cambiar usuario
+                </button>
+              </form>
+            )}
+            
+            {!username && (
               <div className="text-center">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Iniciando sesión...</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Selecciona un usuario para continuar</p>
               </div>
             )}
           </div>
